@@ -1,6 +1,6 @@
 // Providers often supply types with their API libraries.
 
-export interface AcmeUser {
+/* export interface AcmeUser {
   id: string;
   name: string;
 }
@@ -9,6 +9,20 @@ export interface AcmeGroup {
   id: string;
   name: string;
   users?: Pick<AcmeUser, 'id'>[];
+}*/
+
+export interface OneTrustAccount {
+  account: {
+    organizationId: string;
+    externalId: string;
+    parentOrganizationId: string;
+    parentExternalId: string;
+    name: string;
+    defaultApprover: string;
+    defaultLanguageCode: string;
+    description: string;
+    children: array;
+  };
 }
 
 // Those can be useful to a degree, but often they're just full of optional

@@ -17,14 +17,14 @@ export const Entities: Record<
 > = {
   ACCOUNT: {
     resourceName: 'Account',
-    _type: 'acme_account',
+    _type: 'OneTrust_account',
     _class: ['Account'],
     schema: {
       properties: {
-        mfaEnabled: { type: 'boolean' },
-        manager: { type: 'string' },
+        name: { type: 'string' },
+        defaultApprover: { type: 'string' },
       },
-      required: ['mfaEnabled', 'manager'],
+      required: ['name', 'defaultApprover'],
     },
   },
   GROUP: {

@@ -1,9 +1,14 @@
 import http from 'http';
 
-import { IntegrationProviderAuthenticationError } from '@jupiterone/integration-sdk-core';
-
+import {
+  IntegrationLogger,
+  IntegrationProviderAPIError,
+  IntegrationProviderAuthenticationError,
+  IntegrationProviderAuthorizationError,
+} from '@jupiterone/integration-sdk-core';
+import fetch from 'node-fetch';
+import { OneTrustAccount } from './types';
 import { IntegrationConfig } from './config';
-import { AcmeUser, AcmeGroup } from './types';
 
 export type ResourceIteratee<T> = (each: T) => Promise<void> | void;
 
@@ -16,9 +21,50 @@ export type ResourceIteratee<T> = (each: T) => Promise<void> | void;
  * resources.
  */
 export class APIClient {
-  constructor(readonly config: IntegrationConfig) {}
+  private BASE_URL = 'https://app.onetrust.com/api';
+  constructor(
+    readonly config: IntegrationConfig,
+    readonly logger: IntegrationLogger,
+  ) {}
 
-  public async verifyAuthentication(): Promise<void> {
+  public async getAccount(): Promise<OneTrustAccount> {
+    const endpoint = '/access/v1/external/organizations';
+    const response = await fetch(this.BASE_URL + endpoint, {
+      headers: {
+        Authorization: `Bearer ${this.config.accessToken}`,
+      },
+    });
+    // If the response is not ok, we should handle the error
+    if (!response.ok) {
+      this.handleApiError(response, this.BASE_URL + endpoint);
+    }
+
+    return (await response.json()) as OneTrustAccount;
+  }
+
+  private handleApiError(err: any, endpoint: string): void {
+    if (err.status === 401) {
+      throw new IntegrationProviderAuthenticationError({
+        endpoint: endpoint,
+        status: err.status,
+        statusText: err.statusText,
+      });
+    } else if (err.status === 403) {
+      throw new IntegrationProviderAuthorizationError({
+        endpoint: endpoint,
+        status: err.status,
+        statusText: err.statusText,
+      });
+    } else {
+      throw new IntegrationProviderAPIError({
+        endpoint: endpoint,
+        status: err.status,
+        statusText: err.statusText,
+      });
+    }
+  }
+
+  /*  public async verifyAuthentication(): Promise<void> {
     // TODO make the most light-weight request possible to validate
     // authentication works with the provided credentials, throw an err if
     // authentication fails
@@ -51,7 +97,7 @@ export class APIClient {
         statusText: err.statusText,
       });
     }
-  }
+  }*/
 
   /**
    * Iterates each user resource in the provider.
@@ -119,6 +165,10 @@ export class APIClient {
   }
 }
 
-export function createAPIClient(config: IntegrationConfig): APIClient {
+export function createAPIClient(
+  config: IntegrationConfig,
+  logger: IntegrationLogger,
+): APIClient {
   return new APIClient(config);
+  return new APIClient(config, logger);
 }

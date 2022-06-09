@@ -14,7 +14,6 @@
   },
   "scripts": {
     "start": "j1-integration collect --disable-schema-validation",
-    "upload": "j1-integration run --integrationInstanceId 8e4f7109-0ec4-4882-a39a-dfbc6cf787e9 --disable-schema-validation",
     "graph": "j1-integration visualize",
     "graph:types": "j1-integration visualize-types",
     "graph:spec": "j1-integration visualize-types --project-path docs/spec --output-file ./.j1-integration/types-graph/index.spec.html",
@@ -28,7 +27,7 @@
     "test:env": "LOAD_ENV=1 yarn test",
     "test:ci": "yarn format:check && yarn lint && yarn type-check && yarn test",
     "build": "tsc -p tsconfig.dist.json --declaration && cp README.md dist/README.md && cp -r jupiterone/ dist/jupiterone/",
-    "prepush": "yarn format:check && yarn lint && yarn type-check && jest --no-verify "
+    "prepush": "yarn format:check && yarn lint && yarn type-check && jest --changedSince main --no-verify "
   },
   "peerDependencies": {
     "@jupiterone/integration-sdk-core": "^8.13.0"

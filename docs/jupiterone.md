@@ -98,7 +98,7 @@ The following entities are created:
 
 | Resources | Entity `_type`     | Entity `_class` |
 | --------- | ------------------ | --------------- |
-| Account   | `OneTrust_account` | `Account`       |
+| Account   | `onetrust_account` | `Account`       |
 
 <!--
 ********************************************************************************

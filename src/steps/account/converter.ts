@@ -7,11 +7,11 @@ import { OneTrustAccount } from '../../types';
 import { Entities } from '../constants';
 
 export function createAccountEntity(account: OneTrustAccount): Entity {
-  return {
+  return createIntegrationEntity({
     entityData: {
       source: account,
       assign: {
-        _key: account.organizationId,
+        _key: 'organizationId',
         _type: Entities.ACCOUNT._type,
         _class: Entities.ACCOUNT._class,
         name: 'Account',
@@ -26,5 +26,5 @@ export function createAccountEntity(account: OneTrustAccount): Entity {
         children: account.children,
       },
     },
-  };
+  });
 }

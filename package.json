@@ -13,7 +13,8 @@
     "access": "public"
   },
   "scripts": {
-    "start": "j1-integration collect",
+    "start": "j1-integration collect --disable-schema-validation",
+    "upload": "j1-integration run --integrationInstanceId 8e4f7109-0ec4-4882-a39a-dfbc6cf787e9 --disable-schema-validation",
     "graph": "j1-integration visualize",
     "graph:types": "j1-integration visualize-types",
     "graph:spec": "j1-integration visualize-types --project-path docs/spec --output-file ./.j1-integration/types-graph/index.spec.html",
@@ -30,11 +31,11 @@
     "prepush": "yarn format:check && yarn lint && yarn type-check && jest --changedSince main"
   },
   "peerDependencies": {
-    "@jupiterone/integration-sdk-core": "^8.8.0"
+    "@jupiterone/integration-sdk-core": "^8.13.0"
   },
   "devDependencies": {
-    "@jupiterone/integration-sdk-core": "^8.8.0",
-    "@jupiterone/integration-sdk-dev-tools": "^8.8.0",
-    "@jupiterone/integration-sdk-testing": "^8.8.0"
+    "@jupiterone/integration-sdk-core": "^8.13.0",
+    "@jupiterone/integration-sdk-dev-tools": "^8.13.0",
+    "@jupiterone/integration-sdk-testing": "^8.13.0"
   }
 }

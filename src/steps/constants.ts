@@ -17,7 +17,7 @@ export const Entities: Record<
 > = {
   ACCOUNT: {
     resourceName: 'Account',
-    _type: 'OneTrust_account',
+    _type: 'onetrust_account',
     _class: ['Account'],
     schema: {
       properties: {

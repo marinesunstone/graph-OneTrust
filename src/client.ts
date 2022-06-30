@@ -42,6 +42,8 @@ export class APIClient {
     return (await response.json()) as OneTrustAccount;
   }
 
+
+
   private handleApiError(err: any, endpoint: string): void {
     if (err.status === 401) {
       throw new IntegrationProviderAuthenticationError({
@@ -96,6 +98,21 @@ export class APIClient {
         status: err.status,
         statusText: err.statusText,
       });
+    }
+
+
+
+
+    public async getAssessments(): Promist<OneTrustAssessment> {
+      const endpoint = '/assessment/v2/assessments'
+      const response = await fetch(this.BASE_URL + endpoint. {
+        headers: {
+          Authorization: `Bearer ${this.config.accessToken}`,
+        }
+      });
+      if (!response.ok) {
+        this.handleApiError(response, this.BASE_URL + endpoint);
+      }
     }
   }*/
 

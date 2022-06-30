@@ -25,6 +25,38 @@ export interface OneTrustAccount {
   };
 }
 
+
+
+export interface OneTrustAssessment {
+  assessment: {
+    assessmentId: string;
+    createDt: string;
+    name: string;
+    number: int32;
+    orgGroupName: string;
+    result: string;
+    resultId: string;
+    resultName: string;
+    status: string;
+    tags: array;
+    templateName: string;
+    templateId: string;
+    templateRootVersionId: string;
+    primaryInventoryDetails: {
+      primaryInventoryName: string;
+      primaryInventoryId: string;
+      primaryInventoryNumber: int32;
+    };
+    inherentRiskScore: number;
+    lastUpdated: date-time;
+    openRiskCount: int64;
+    residualRiskScore: number;
+    targetRiskScore: number;
+  };
+}
+
+
+
 // Those can be useful to a degree, but often they're just full of optional
 // values. Understanding the response data may be more reliably accomplished by
 // reviewing the API response recordings produced by testing the wrapper client

@@ -6,13 +6,14 @@ import {
 
 export const Steps = {
   ACCOUNT: 'fetch-account',
+  ASSESSMENTS: 'fetch-assessments',
   USERS: 'fetch-users',
   GROUPS: 'fetch-groups',
   GROUP_USER_RELATIONSHIPS: 'build-user-group-relationships',
 };
 
 export const Entities: Record<
-  'ACCOUNT' | 'GROUP' | 'USER',
+  'ACCOUNT' | 'ASSESSMENT' | 'GROUP' | 'USER',
   StepEntityMetadata
 > = {
   ACCOUNT: {
@@ -26,6 +27,21 @@ export const Entities: Record<
       },
       required: ['name', 'defaultApprover'],
     },
+  },
+  ASSESSMENT: {
+    ressourceName: 'Assessment',
+    _type: 'onetrust_assessment',
+    _class: ['Assesment'],
+    schema: {
+      properties: {
+        assessmentId: { type: 'string' },
+        name: { type: 'string' },
+        status: { type: 'string' },
+        result: { type: 'string' },
+        lastUpdated: { type: 'string' },
+      },
+      required: ['assessmentId', 'name', 'status', 'result', 'lastUpdated']
+    }
   },
   GROUP: {
     resourceName: 'UserGroup',

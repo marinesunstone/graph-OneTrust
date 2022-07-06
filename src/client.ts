@@ -7,7 +7,7 @@ import {
   IntegrationProviderAuthorizationError,
 } from '@jupiterone/integration-sdk-core';
 import fetch from 'node-fetch';
-import { OneTrustAccount } from './types';
+import { OneTrustAccount, OneTrustAssessments } from './types';
 import { IntegrationConfig } from './config';
 
 export type ResourceIteratee<T> = (each: T) => Promise<void> | void;
@@ -43,6 +43,20 @@ export class APIClient {
   }
 
 
+  public async getAssessments(): Promise<OneTrustAssessments> {
+    const endpoint = '/assessment/v2/assessments';
+    const response = await fetch(this.BASE_URL + endpoint, {
+      headers: {
+        Authorization: `Bearer ${this.config.accessToken}`,
+      },
+    });
+    // If the response is not ok, we should handle the error
+    if (!response.ok) {
+      this.handleApiError(response, this.BASE_URL + endpoint);
+    }
+    return (await response.json()) as OneTrustAssessments;
+  }
+
 
   private handleApiError(err: any, endpoint: string): void {
     if (err.status === 401) {
@@ -66,61 +80,24 @@ export class APIClient {
     }
   }
 
-  /*  public async verifyAuthentication(): Promise<void> {
-    // TODO make the most light-weight request possible to validate
-    // authentication works with the provided credentials, throw an err if
-    // authentication fails
-    const request = new Promise<void>((resolve, reject) => {
-      http.get(
-        {
-          hostname: 'localhost',
-          port: 443,
-          path: '/api/v1/some/endpoint?limit=1',
-          agent: false,
-          timeout: 10,
-        },
-        (res) => {
-          if (res.statusCode !== 200) {
-            reject(new Error('Provider authentication failed'));
-          } else {
-            resolve();
-          }
-        },
-      );
-    });
-
-    try {
-      await request;
-    } catch (err) {
-      throw new IntegrationProviderAuthenticationError({
-        cause: err,
-        endpoint: 'https://localhost/api/v1/some/endpoint?limit=1',
-        status: err.status,
-        statusText: err.statusText,
-      });
-    }
-
-
-
-
-    public async getAssessments(): Promist<OneTrustAssessment> {
-      const endpoint = '/assessment/v2/assessments'
-      const response = await fetch(this.BASE_URL + endpoint. {
-        headers: {
-          Authorization: `Bearer ${this.config.accessToken}`,
-        }
-      });
-      if (!response.ok) {
-        this.handleApiError(response, this.BASE_URL + endpoint);
-      }
-    }
-  }*/
-
   /**
    * Iterates each user resource in the provider.
    *
    * @param iteratee receives each resource to produce entities/relationships
    */
+
+
+   public async iterateAssessments(
+     iteratee: ResourceIteratee<OneTrustAssessments>,
+  ): Promise<void> {
+    const assessments = await this.getAssessments('onetrust_assessment');
+    for (const assessment of assessments.content) {
+      await iteratee(assessment);
+    }
+    //note select only content array from json response
+  }
+
+
   public async iterateUsers(
     iteratee: ResourceIteratee<AcmeUser>,
   ): Promise<void> {

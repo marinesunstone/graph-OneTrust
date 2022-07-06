@@ -96,9 +96,10 @@ https://github.com/JupiterOne/sdk/blob/main/docs/integrations/development.md
 
 The following entities are created:
 
-| Resources | Entity `_type`     | Entity `_class` |
-| --------- | ------------------ | --------------- |
-| Account   | `onetrust_account` | `Account`       |
+| Resources | Entity `_type`        | Entity `_class` |
+| --------- | --------------------- | --------------- |
+| Account   | `onetrust_account`    | `Account`       |
+|           | `onetrust_assessment` | `Assesment`     |
 
 <!--
 ********************************************************************************

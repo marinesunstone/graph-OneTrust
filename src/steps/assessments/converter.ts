@@ -2,11 +2,11 @@ import {
   createIntegrationEntity,
   Entity,
 } from '@jupiterone/integration-sdk-core';
-import { OneTrustAssessment } from '../../types';
+import { OneTrustAssessments } from '../../types';
 
 import { Entities } from '../constants';
 
-export function createAssessmentEntity(assessment: OneTrustAssessment): Entity {
+export function createAssessmentEntity(assessment: OneTrustAssessments): Entity {
   return createIntegrationEntity({
     entityData: {
       source: assessment,
@@ -28,9 +28,7 @@ export function createAssessmentEntity(assessment: OneTrustAssessment): Entity {
         templateName: assessment.templateName,
         templateId: assessment.templateId,
         templateRootVersionId: assessment.templateRootVersionId,
-        primaryInventoryName: assessment.primaryInventoryDetails.primaryInventoryName,
-        primaryInventoryId: assessment.primaryInventoryDetails.primaryInventoryId,
-        primaryInventoryNumber: assessment.primaryInventoryDetails.primaryInventoryNumber,
+        primaryInventoryDetails: assessment.primaryInventoryDetails,
         inherentRiskScore: assessment.inherentRiskScore,
         lastUpdated: assessment.lastUpdated,
         openRiskCount: assessment.openRiskCount,

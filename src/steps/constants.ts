@@ -31,7 +31,7 @@ export const Entities: Record<
   ASSESSMENT: {
     ressourceName: 'Assessment',
     _type: 'onetrust_assessment',
-    _class: ['Assesment'],
+    _class: ['Assessment'],
     schema: {
       properties: {
         assessmentId: { type: 'string' },

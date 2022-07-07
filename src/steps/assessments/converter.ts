@@ -11,7 +11,7 @@ export function createAssessmentEntity(assessment: OneTrustAssessments): Entity 
     entityData: {
       source: assessment,
       assign: {
-        _key: 'organizationId',
+        _key: `assesment_id:${assessment.assessmentId}`,
         _type: Entities.ASSESSMENT._type,
         _class: Entities.ASSESSMENT._class,
         name: 'Assessments',

@@ -44,7 +44,7 @@ export class APIClient {
 
 
   public async getAssessments(): Promise<OneTrustAssessments> {
-    const endpoint = '/assessment/v2/assessments';
+    const endpoint = '/assessment/v2/assessments?page=0&size=2000';
     const response = await fetch(this.BASE_URL + endpoint, {
       headers: {
         Authorization: `Bearer ${this.config.accessToken}`,

@@ -28,7 +28,6 @@ export function createAssessmentEntity(assessment: OneTrustAssessments): Entity 
         templateName: assessment.templateName,
         templateId: assessment.templateId,
         templateRootVersionId: assessment.templateRootVersionId,
-        primaryInventoryDetails: assessment.primaryInventoryDetails,
         inherentRiskScore: assessment.inherentRiskScore,
         lastUpdated: assessment.lastUpdated,
         openRiskCount: assessment.openRiskCount,

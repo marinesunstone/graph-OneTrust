@@ -58,6 +58,11 @@ export interface OneTrustAssessments {
 }
 
 
+export interface OneTrustAssessmentResults {
+  assessmentId: string;
+}
+
+
 
 // Those can be useful to a degree, but often they're just full of optional
 // values. Understanding the response data may be more reliably accomplished by

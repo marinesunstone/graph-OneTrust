@@ -7,13 +7,15 @@ import {
 export const Steps = {
   ACCOUNT: 'fetch-account',
   ASSESSMENTS: 'fetch-assessments',
+  ASSESSMENTRESULTS: 'fetch-assessment-results',
   USERS: 'fetch-users',
   GROUPS: 'fetch-groups',
+  ASSESSMENT_RESULTS_RELATIONSHIPS: 'build-assessment-results-relationships',
   GROUP_USER_RELATIONSHIPS: 'build-user-group-relationships',
 };
 
 export const Entities: Record<
-  'ACCOUNT' | 'ASSESSMENT' | 'GROUP' | 'USER',
+  'ACCOUNT' | 'ASSESSMENT' | 'ASSESSMENTRESULTS' | 'GROUP' | 'USER',
   StepEntityMetadata
 > = {
   ACCOUNT: {
@@ -41,6 +43,17 @@ export const Entities: Record<
         lastUpdated: { type: 'string' },
       },
       required: ['assessmentId', 'name', 'status', 'result', 'lastUpdated']
+    }
+  },
+  ASSESSMENTRESULTS: {
+    ressourceName: 'assessmentResults',
+    _type: 'onetrust_assessment_results',
+    _class: ['Assessment-results'],
+    schema: {
+      properties: {
+        assessmentId: { type: 'string' }
+      },
+      required: ['assessmentId']
     }
   },
   GROUP: {
@@ -72,7 +85,7 @@ export const Entities: Record<
 };
 
 export const Relationships: Record<
-  'ACCOUNT_HAS_USER' | 'ACCOUNT_HAS_GROUP' | 'GROUP_HAS_USER',
+  'ACCOUNT_HAS_USER' | 'ACCOUNT_HAS_GROUP' | 'GROUP_HAS_USER' | 'ASSESSMENT_HAS_RESULTS',
   StepRelationshipMetadata
 > = {
   ACCOUNT_HAS_USER: {
@@ -93,4 +106,10 @@ export const Relationships: Record<
     _class: RelationshipClass.HAS,
     targetType: Entities.USER._type,
   },
+  ASSESSMENT_HAS_RESULTS: {
+    _type: 'assessment_has_results',
+    sourceType: entities.ASSESSMENT._type,
+    _class: RelationshipClass.HAS,
+    targetType: Entities.ASSESSMENTRESULTS._type,
+  }
 };

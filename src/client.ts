@@ -7,7 +7,7 @@ import {
   IntegrationProviderAuthorizationError,
 } from '@jupiterone/integration-sdk-core';
 import fetch from 'node-fetch';
-import { OneTrustAccount, OneTrustAssessments } from './types';
+import { OneTrustAccount, OneTrustAssessments, OneTrustAssessmentResults } from './types';
 import { IntegrationConfig } from './config';
 
 export type ResourceIteratee<T> = (each: T) => Promise<void> | void;
@@ -58,6 +58,20 @@ export class APIClient {
   }
 
 
+  public async getAssessmentsResults(assessmentId: string): Promise<OneTrustAssessmentResults> {
+    const endpoint = `/assessment/v2/assessments/${assessmentId}/export`;
+    const response = await fetch(this.BASE_URL + endpoint, {
+      headers: {
+        Authorization: `Bearer ${this.config.accessToken}`,
+      },
+    });
+    // If the response is not ok, we should handle the error
+    if (!response.ok) {
+      this.handleApiError(response, this.BASE_URL + endpoint);
+    }
+    return (await response.json()) as OneTrustAssessmentResults;
+  }
+
   private handleApiError(err: any, endpoint: string): void {
     if (err.status === 401) {
       throw new IntegrationProviderAuthenticationError({
@@ -97,6 +111,17 @@ export class APIClient {
     //note select only content array from json response
   }
 
+
+  public async iterateAssessmentResults(
+    assessmentId: string,
+    iteratee: ResourceIteratee<OneTrustAssessmentResults>,
+ ): Promise<void> {
+   const assessmentresults = await this.getAssessmentsResults(assessmentId);
+   for (const assessmentresult of assessmentresults) {
+     await iteratee(assessmentresult);
+   }
+   //note select only content array from json response
+ }
 
   public async iterateUsers(
     iteratee: ResourceIteratee<AcmeUser>,

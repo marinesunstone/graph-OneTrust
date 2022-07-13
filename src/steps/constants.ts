@@ -108,7 +108,7 @@ export const Relationships: Record<
   },
   ASSESSMENT_HAS_RESULTS: {
     _type: 'assessment_has_results',
-    sourceType: entities.ASSESSMENT._type,
+    sourceType: Entities.ASSESSMENT._type,
     _class: RelationshipClass.HAS,
     targetType: Entities.ASSESSMENTRESULTS._type,
   }

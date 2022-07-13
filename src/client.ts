@@ -59,6 +59,7 @@ export class APIClient {
 
 
   public async getAssessmentsResults(assessmentId: string): Promise<OneTrustAssessmentResults> {
+    console.log("GET ASSESSMENT RESUSLTs")
     const endpoint = `/assessment/v2/assessments/${assessmentId}/export`;
     const response = await fetch(this.BASE_URL + endpoint, {
       headers: {
@@ -117,6 +118,7 @@ export class APIClient {
     iteratee: ResourceIteratee<OneTrustAssessmentResults>,
  ): Promise<void> {
    const assessmentresults = await this.getAssessmentsResults(assessmentId);
+   console.log("ITERATE", assessmentresults)
    for (const assessmentresult of assessmentresults) {
      await iteratee(assessmentresult);
    }

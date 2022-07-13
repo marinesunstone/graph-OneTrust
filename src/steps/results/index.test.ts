@@ -20,14 +20,3 @@ test('fetch-assessment-results', async () => {
   const stepResult = await executeStepWithDependencies(stepConfig);
   expect(stepResult).toMatchStepMetadata(stepConfig);
 });
-
-test('build-assessment-results-relationships', async () => {
-  recording = setupProjectRecording({
-    directory: __dirname,
-    name: 'build-assessment-results-relationships',
-  });
-
-  const stepConfig = buildStepTestConfigForStep(Steps.ASSESSMENT_RESULTS_RELATIONSHIPS);
-  const stepResult = await executeStepWithDependencies(stepConfig);
-  expect(stepResult).toMatchStepMetadata(stepConfig);
-});

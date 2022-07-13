@@ -23,7 +23,7 @@ export interface OneTrustAccount {
     description: string;
     children: array;
   };
-}
+};
 
 
 
@@ -47,9 +47,9 @@ export interface OneTrustAssessments {
         primaryInventoryName: string;
         primaryInventoryId: string;
         primaryInventoryNumber: int32;
-      },
+      };
       inherentRiskScore: number;
-      lastUpdated: date-time;
+      lastUpdated: string;
       openRiskCount: int64;
       residualRiskScore: number;
       targetRiskScore: number;

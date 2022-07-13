@@ -10,7 +10,6 @@ export const Steps = {
   ASSESSMENTRESULTS: 'fetch-assessment-results',
   USERS: 'fetch-users',
   GROUPS: 'fetch-groups',
-  ASSESSMENT_RESULTS_RELATIONSHIPS: 'build-assessment-results-relationships',
   GROUP_USER_RELATIONSHIPS: 'build-user-group-relationships',
 };
 

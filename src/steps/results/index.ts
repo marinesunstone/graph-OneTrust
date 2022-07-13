@@ -20,8 +20,7 @@ export async function fetchAssessmentsResultsDetails({
   logger,
 }: IntegrationStepExecutionContext<IntegrationConfig>) {
   const apiClient = createAPIClient(instance.config, logger);
-  const accountEntity = (await jobState.getData(ACCOUNT_ENTITY_KEY)) as Entity;
-
+  console.log("INHERE")
   await jobState.iterateEntities(
     { _type: Entities.ASSESSMENT._type },
     async(assessmentEntity) => {
@@ -52,7 +51,7 @@ export const assessmentResultsSteps: IntegrationStep<IntegrationConfig>[] = [
     name: 'Fetch Assessments Details',
     entities: [Entities.ASSESSMENTRESULTS],
     relationships: [Relationships.ASSESSMENT_HAS_RESULTS],
-    dependsOn: [Steps.ASSESSMENT],
+    dependsOn: [Steps.ASSESSMENTS],
     executionHandler: fetchAssessmentsResultsDetails,
   }
 ]

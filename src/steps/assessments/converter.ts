@@ -7,6 +7,7 @@ import { OneTrustAssessments } from '../../types';
 import { Entities } from '../constants';
 
 
+
 export function createAssessmentEntity(assessment: OneTrustAssessments): Entity {
   return createIntegrationEntity({
     entityData: {

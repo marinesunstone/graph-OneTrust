@@ -11,7 +11,7 @@ afterEach(async () => {
 
 test('fetch-assssements', async () => {
   recording = setupProjectRecording({
-    directory: __dirname
+    directory: __dirname,
     name: 'fetch-assessments',
   });
 

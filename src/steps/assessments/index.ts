@@ -21,7 +21,7 @@ export async function fetchAssessmentsDetails({
 }: IntegrationStepExecutionContext<IntegrationConfig>) {
   const apiClient = createAPIClient(instance.config, logger);
   const accountEntity = (await jobState.getData(ACCOUNT_ENTITY_KEY)) as Entity;
-
+  console.log("ASEESMSENT", accountEntity)
   await apiClient.iterateAssessments(async (assessment) => {
     const assessmentEntity = await jobState.addEntity(createAssessmentEntity(assessment))
   });

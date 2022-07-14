@@ -20,7 +20,6 @@ export async function fetchAssessmentResultsDetails({
   logger,
 }: IntegrationStepExecutionContext<IntegrationConfig>) {
   const apiClient = createAPIClient(instance.config, logger);
-  console.log("INHERE")
   await jobState.iterateEntities(
     { _type: Entities.ASSESSMENT._type },
     async(assessmentEntity) => {

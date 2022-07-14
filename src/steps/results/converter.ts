@@ -8,7 +8,6 @@ import { Entities } from '../constants';
 
 
 export function createAssessmentResultsEntity(assessmentResults: OneTrustAssessmentResults): Entity {
-  console.log("CONVERTER")
   return createIntegrationEntity({
     entityData: {
       source: assessmentResults,

@@ -14,7 +14,7 @@ import { createAssessmentResultsEntity } from './converter';
 import { ACCOUNT_ENTITY_KEY } from '../account';
 
 
-export async function fetchAssessmentsResultsDetails({
+export async function fetchAssessmentResultsDetails({
   instance,
   jobState,
   logger,
@@ -52,6 +52,6 @@ export const assessmentResultsSteps: IntegrationStep<IntegrationConfig>[] = [
     entities: [Entities.ASSESSMENTRESULTS],
     relationships: [Relationships.ASSESSMENT_HAS_RESULTS],
     dependsOn: [Steps.ASSESSMENTS],
-    executionHandler: fetchAssessmentsResultsDetails,
+    executionHandler: fetchAssessmentResultsDetails,
   }
 ]

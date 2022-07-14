@@ -6,14 +6,12 @@ import { OneTrustAssessments } from '../../types';
 
 import { Entities } from '../constants';
 
-
-
 export function createAssessmentEntity(assessment: OneTrustAssessments): Entity {
   return createIntegrationEntity({
     entityData: {
       source: assessment,
       assign: {
-        _key:` assessment_id: ${assessment.assessmentId}`,
+        _key: `assesment_id:${assessment.assessmentId}`,
         _type: Entities.ASSESSMENT._type,
         _class: Entities.ASSESSMENT._class,
         name: 'Assessments',

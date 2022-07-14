@@ -1,9 +1,6 @@
 import {
-  Entity,
   IntegrationStep,
   IntegrationStepExecutionContext,
-  IntegrationMissingKeyError,
-  getRawData
 } from '@jupiterone/integration-sdk-core';
 
 import { IntegrationConfig } from '../../config';
@@ -13,7 +10,6 @@ import { createAssessmentEntity } from './converter';
 import { ACCOUNT_ENTITY_KEY } from '../account';
 
 
-
 export async function fetchAssessmentsDetails({
   instance,
   jobState,
@@ -21,7 +17,7 @@ export async function fetchAssessmentsDetails({
 }: IntegrationStepExecutionContext<IntegrationConfig>) {
   const apiClient = createAPIClient(instance.config, logger);
   const accountEntity = (await jobState.getData(ACCOUNT_ENTITY_KEY)) as Entity;
-  console.log("ASEESMSENT", accountEntity)
+
   await apiClient.iterateAssessments(async (assessment) => {
     const assessmentEntity = await jobState.addEntity(createAssessmentEntity(assessment))
   });

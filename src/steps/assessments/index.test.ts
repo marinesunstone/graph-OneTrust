@@ -9,7 +9,7 @@ afterEach(async () => {
   await recording.stop();
 });
 
-test('fetch-assssements', async () => {
+test('fetch-assessments', async () => {
   recording = setupProjectRecording({
     directory: __dirname,
     name: 'fetch-assessments',

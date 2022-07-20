@@ -58,6 +58,20 @@ export class APIClient {
   }
 
 
+  public async getAssessmentResults(assessmentId: string): Promise<OneTrustAssessmentResults> {
+    const endpoint = `/assessment/v2/assessments/${assessmentId.assessmentId}/export`;
+    const response = await fetch(this.BASE_URL + endpoint, {
+      headers: {
+        Authorization: `Bearer ${this.config.accessToken}`,
+      },
+    });
+    // If the response is not ok, we should handle the error
+    if (!response.ok) {
+      this.handleApiError(response, this.BASE_URL + endpoint);
+    }
+    return (await response.json()) as OneTrustAssessmentResults;
+  }
+
   private handleApiError(err: any, endpoint: string): void {
     if (err.status === 401) {
       throw new IntegrationProviderAuthenticationError({
@@ -94,7 +108,15 @@ export class APIClient {
     for (const assessment of assessments.content) {
       await iteratee(assessment);
     }
-    //note select only content array from json response
+  }
+
+
+  public async iterateAssessmentResults(
+    assessmentId: string,
+    iteratee: ResourceIteratee<OneTrustAssessmentResults>,
+  ): Promise<void> {
+    const assessmentResults = await this.getAssessmentResults(assessmentId);
+    await iteratee(assessmentResults);
   }
 
 

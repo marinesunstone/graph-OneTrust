@@ -20,7 +20,7 @@ export function createAssessmentEntity(
         name: 'Assessments',
         assessmentId: `${assessment.assessmentId}`,
         createDt: assessment.createDt,
-        name: vendor - assessment.name,
+        name: `${vendor} - ${assessment.name}`,
         number: assessment.number,
         orgGroupName: assessment.orgGroupName,
         result: assessment.result,

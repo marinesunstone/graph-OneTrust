@@ -32,7 +32,7 @@ export const Entities: Record<
   ASSESSMENT: {
     resourceName: 'Assessment',
     _type: 'onetrust_assessment',
-    _class: ['Assessment'],
+    _class: ['Vendor'],
     schema: {
       properties: {
         assessmentId: { type: 'string' },
@@ -47,7 +47,7 @@ export const Entities: Record<
   ASSESSMENTRESULTS: {
     resourceName: 'assessmentResults',
     _type: 'onetrust_assessment_results',
-    _class: ['Question'],
+    _class: ['Assessment'],
     schema: {
       properties: {
         assessmentId: { type: 'string' },
@@ -85,7 +85,10 @@ export const Entities: Record<
 };
 
 export const Relationships: Record<
-  'ACCOUNT_HAS_USER' | 'ACCOUNT_HAS_GROUP' | 'GROUP_HAS_USER' | 'ASSESSMENT_HAS_RESULTS',
+  | 'ACCOUNT_HAS_USER'
+  | 'ACCOUNT_HAS_GROUP'
+  | 'GROUP_HAS_USER'
+  | 'ASSESSMENT_HAS_RESULTS',
   StepRelationshipMetadata
 > = {
   ACCOUNT_HAS_USER: {
@@ -111,5 +114,5 @@ export const Relationships: Record<
     sourceType: Entities.ASSESSMENT._type,
     _class: RelationshipClass.HAS,
     targetType: Entities.ASSESSMENTRESULTS._type,
-   },
- };
+  },
+};

@@ -9,7 +9,6 @@ import { Steps, Entities } from '../constants';
 import { createAssessmentEntity } from './converter';
 import { ACCOUNT_ENTITY_KEY } from '../account';
 
-
 export async function fetchAssessmentsDetails({
   instance,
   jobState,
@@ -19,7 +18,13 @@ export async function fetchAssessmentsDetails({
   const accountEntity = (await jobState.getData(ACCOUNT_ENTITY_KEY)) as Entity;
 
   await apiClient.iterateAssessments(async (assessment) => {
-    const assessmentEntity = await jobState.addEntity(createAssessmentEntity(assessment))
+    if (assessment.tags.length > 0) {
+      assessment.tags.forEach(async (vendor) => {
+        const assessmentEntity = await jobState.addEntity(
+          createAssessmentEntity(assessment, vendor),
+        );
+      });
+    }
   });
 }
 

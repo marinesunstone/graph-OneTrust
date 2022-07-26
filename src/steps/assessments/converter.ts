@@ -14,13 +14,13 @@ export function createAssessmentEntity(
     entityData: {
       source: assessment,
       assign: {
-        _key: `assesment_id:${vendor}`,
+        _key: `assessment_id:${vendor}`,
         _type: Entities.ASSESSMENT._type,
         _class: Entities.ASSESSMENT._class,
         name: 'Assessments',
         assessmentId: `${assessment.assessmentId}`,
         createDt: assessment.createDt,
-        name: assessment.name,
+        name: vendor - assessment.name,
         number: assessment.number,
         orgGroupName: assessment.orgGroupName,
         result: assessment.result,

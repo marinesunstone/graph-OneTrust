@@ -14,7 +14,7 @@ export function createAssessmentEntity(
     entityData: {
       source: assessment,
       assign: {
-        _key: `assessment_id:${vendor}`,
+        _key: `assessment_id:${vendor}-${assessment.assessmentId}`,
         _type: Entities.ASSESSMENT._type,
         _class: Entities.ASSESSMENT._class,
         name: 'Assessments',

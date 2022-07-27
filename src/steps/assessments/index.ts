@@ -18,7 +18,12 @@ export async function fetchAssessmentsDetails({
   const accountEntity = (await jobState.getData(ACCOUNT_ENTITY_KEY)) as Entity;
 
   await apiClient.iterateAssessments(async (assessment) => {
-    if (assessment.tags.length > 0) {
+    if (
+      assessment.tags.length > 0 &&
+      (assessment.status == 'Completed' ||
+        assessment.status == 'In Progress' ||
+        assessment.status == 'Under Review')
+    ) {
       assessment.tags.forEach(async (vendor) => {
         const assessmentEntity = await jobState.addEntity(
           createAssessmentEntity(assessment, vendor),

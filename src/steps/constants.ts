@@ -5,7 +5,6 @@ import {
 } from '@jupiterone/integration-sdk-core';
 
 export const ACCOUNT_ENTITY_KEY = 'entity:account';
-export const ASSESSMENT_ENTITY_KEY = 'entity:assessment';
 
 export const Steps = {
   ACCOUNT: 'fetch-account',
@@ -126,9 +125,9 @@ export const Relationships: Record<
     targetType: Entities.ASSESSMENTRESULTS._type,
   },
   VENDOR_HAS_ASSESSMENTS: {
-    _type: 'vendor_has_assessments',
+    _type: 'onetrust_assessment_has_vendor_assessments',
     sourceType: Entities.ASSESSMENT._type,
     _class: RelationshipClass.HAS,
     targetType: Entities.VENDORS._type,
-  }
+  },
 };

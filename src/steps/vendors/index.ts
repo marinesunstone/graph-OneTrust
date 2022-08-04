@@ -9,9 +9,8 @@ import {
 } from '@jupiterone/integration-sdk-core';
 
 import { IntegrationConfig } from '../../config';
-import { createAPIClient } from
- '../../client';
-import { ASSESSMENT_ENTITY_KEY, Steps, Entities, Relationships } from '../constants';
+import { createAPIClient } from '../../client';
+import { Steps, Entities, Relationships } from '../constants';
 import { createVendorEntity, getVendorAssessmentKey } from './converter';
 
 export async function fetchVendorsDetails({
@@ -21,39 +20,37 @@ export async function fetchVendorsDetails({
 }: IntegrationStepExecutionContext<IntegrationConfig>) {
   const apiClient = createAPIClient(instance.config, logger);
   await jobState.iterateEntities(
-    { _type: Entities.ASSESSMENT._type},
-    async (assessment) => {
-      const assessmentEntity = (await jobState.getData(ASSESSMENT_ENTITY_KEY)) as Entity;
+    { _type: Entities.ASSESSMENT._type },
+    async (assessmentEntity) => {
       await apiClient.iterateVendorAssessments(async (assessment) => {
         if (
           assessment.tags.length > 0 &&
           (assessment.status == 'Completed' ||
             assessment.status == 'In Progress' ||
             assessment.status == 'Under Review')
-        )
-        {
+        ) {
           const assessmentId = assessment.assessmentId;
           assessment.tags.forEach(async (vendor) => {
             const hasKey = await jobState.hasKey(
-              getVendorAssessmentKey(vendor, assessmentId)
+              getVendorAssessmentKey(vendor, assessmentId),
             );
-            if(!hasKey) {
+            if (!hasKey) {
               const vendorEntity = await jobState.addEntity(
                 createVendorEntity(vendor, assessment),
-              )
+              );
               await jobState.addRelationship(
                 createDirectRelationship({
                   from: assessmentEntity,
+                  to: vendorEntity,
                   _class: RelationshipClass.HAS,
-                  to: vendorEntity
-                })
+                }),
               );
-            };
+            }
           });
         }
       });
-    }
-  )
+    },
+  );
 }
 
 export const vendorSteps: IntegrationStep<IntegrationConfig>[] = [

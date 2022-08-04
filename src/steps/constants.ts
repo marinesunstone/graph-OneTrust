@@ -4,17 +4,21 @@ import {
   StepRelationshipMetadata,
 } from '@jupiterone/integration-sdk-core';
 
+export const ACCOUNT_ENTITY_KEY = 'entity:account';
+export const ASSESSMENT_ENTITY_KEY = 'entity:assessment';
+
 export const Steps = {
   ACCOUNT: 'fetch-account',
   ASSESSMENTS: 'fetch-assessments',
   ASSESSMENTRESULTS: 'fetch-assessment-results',
+  VENDORS: 'fetch-vendors',
   USERS: 'fetch-users',
   GROUPS: 'fetch-groups',
   GROUP_USER_RELATIONSHIPS: 'build-user-group-relationships',
 };
 
 export const Entities: Record<
-  'ACCOUNT' | 'ASSESSMENT' | 'ASSESSMENTRESULTS' | 'GROUP' | 'USER',
+  'ACCOUNT' | 'ASSESSMENT' | 'ASSESSMENTRESULTS' | 'VENDORS' | 'GROUP' | 'USER',
   StepEntityMetadata
 > = {
   ACCOUNT: {
@@ -32,7 +36,7 @@ export const Entities: Record<
   ASSESSMENT: {
     resourceName: 'Assessment',
     _type: 'onetrust_assessment',
-    _class: ['Vendor'],
+    _class: ['Assessment'],
     schema: {
       properties: {
         assessmentId: { type: 'string' },
@@ -47,7 +51,7 @@ export const Entities: Record<
   ASSESSMENTRESULTS: {
     resourceName: 'assessmentResults',
     _type: 'onetrust_assessment_results',
-    _class: ['Assessment'],
+    _class: ['AssessmentResults'],
     schema: {
       properties: {
         assessmentId: { type: 'string' },
@@ -55,6 +59,11 @@ export const Entities: Record<
       },
       required: ['assessmentId', 'name'],
     },
+  },
+  VENDORS: {
+    resourceName: 'Vendors',
+    _type: 'onetrust_vendor_assessments',
+    _class: ['Vendor'],
   },
   GROUP: {
     resourceName: 'UserGroup',
@@ -88,7 +97,8 @@ export const Relationships: Record<
   | 'ACCOUNT_HAS_USER'
   | 'ACCOUNT_HAS_GROUP'
   | 'GROUP_HAS_USER'
-  | 'ASSESSMENT_HAS_RESULTS',
+  | 'ASSESSMENT_HAS_RESULTS'
+  | 'VENDOR_HAS_ASSESSMENTS',
   StepRelationshipMetadata
 > = {
   ACCOUNT_HAS_USER: {
@@ -115,4 +125,10 @@ export const Relationships: Record<
     _class: RelationshipClass.HAS,
     targetType: Entities.ASSESSMENTRESULTS._type,
   },
+  VENDOR_HAS_ASSESSMENTS: {
+    _type: 'vendor_has_assessments',
+    sourceType: Entities.ASSESSMENT._type,
+    _class: RelationshipClass.HAS,
+    targetType: Entities.VENDORS._type,
+  }
 };

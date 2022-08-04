@@ -96,10 +96,19 @@ https://github.com/JupiterOne/sdk/blob/main/docs/integrations/development.md
 
 The following entities are created:
 
-| Resources  | Entity `_type`        | Entity `_class` |
-| ---------- | --------------------- | --------------- |
-| Account    | `onetrust_account`    | `Account`       |
-| Assessment | `onetrust_assessment` | `Vendor`        |
+| Resources  | Entity `_type`                | Entity `_class` |
+| ---------- | ----------------------------- | --------------- |
+| Account    | `onetrust_account`            | `Account`       |
+| Assessment | `onetrust_assessment`         | `Assessment`    |
+| Vendors    | `onetrust_vendor_assessments` | `Vendor`        |
+
+### Relationships
+
+The following relationships are created:
+
+| Source Entity `_type` | Relationship `_class` | Target Entity `_type`         |
+| --------------------- | --------------------- | ----------------------------- |
+| `onetrust_assessment` | **HAS**               | `onetrust_vendor_assessments` |
 
 <!--
 ********************************************************************************

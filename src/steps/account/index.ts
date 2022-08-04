@@ -8,8 +8,6 @@ import { createAPIClient } from '../../client';
 import { Steps, Entities } from '../constants';
 import { createAccountEntity } from './converter';
 
-export const ACCOUNT_ENTITY_KEY = 'entity:account';
-
 export async function fetchAccountDetails({
   instance,
   jobState,

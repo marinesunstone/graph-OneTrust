@@ -1,16 +1,7 @@
 
 // Providers often supply types with their API libraries.
 
-/* export interface AcmeUser {
-  id: string;
-  name: string;
-}
 
-export interface AcmeGroup {
-  id: string;
-  name: string;
-  users?: Pick<AcmeUser, 'id'>[];
-}*/
 
 export interface OneTrustAccount {
   account: {
@@ -237,6 +228,31 @@ export interface OneTrustAssessmentResults {
     };
   };
 
+
+  export interface OneTrustVendorAssessments {
+    content: [
+      {
+        assessmentId: string;
+        createDt: string;
+        name: string;
+        number: int32;
+        orgGroupName: string;
+        result: string;
+        resultId: string;
+        resultName: string;
+        status: string;
+        tags: array;
+        templateName: string;
+        templateId: string;
+        templateRootVersionId: string;
+        inherentRiskScore: number;
+        lastUpdated: string;
+        openRiskCount: int64;
+        residualRiskScore: number;
+        targetRiskScore: number;
+      };
+    ];
+  };
 
 // Those can be useful to a degree, but often they're just full of optional
 // values. Understanding the response data may be more reliably accomplished by

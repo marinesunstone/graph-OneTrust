@@ -22,33 +22,29 @@ export async function fetchVendorsDetails({
   await jobState.iterateEntities(
     { _type: Entities.ASSESSMENT._type },
     async (assessmentEntity) => {
-      await apiClient.iterateVendorAssessments(async (assessment) => {
-        if (
-          assessment.tags.length > 0 &&
-          (assessment.status == 'Completed' ||
-            assessment.status == 'In Progress' ||
-            assessment.status == 'Under Review')
-        ) {
-          const assessmentId = assessment.assessmentId;
-          assessment.tags.forEach(async (vendor) => {
-            const hasKey = await jobState.hasKey(
-              getVendorAssessmentKey(vendor, assessmentId),
-            );
-            if (!hasKey) {
-              const vendorEntity = await jobState.addEntity(
-                createVendorEntity(vendor, assessment),
-              );
-              await jobState.addRelationship(
-                createDirectRelationship({
-                  from: assessmentEntity,
-                  to: vendorEntity,
-                  _class: RelationshipClass.HAS,
-                }),
-              );
-            }
-          });
-        }
-      });
+      const assessment = getRawData<Assessment>(assessmentEntity);
+      if (
+        assessment.tags.length > 0 &&
+        (assessment.status == 'Completed' ||
+          assessment.status == 'In Progress' ||
+          assessment.status == 'Under Review')
+      ) {
+        const assessmentId = assessment.assessmentId;
+        assessment.tags.forEach(async (vendor) => {
+          const vendors = await jobState.addEntity(
+            createVendorEntity(vendor, assessment),
+          );
+          const vendorKey = getVendorAssessmentKey(vendor, assessmentId);
+          const vendorEntity = await jobState.findEntity(vendorKey);
+          await jobState.addRelationship(
+            createDirectRelationship({
+              from: vendorEntity,
+              to: assessmentEntity,
+              _class: RelationshipClass.HAS,
+            }),
+          );
+        });
+      }
     },
   );
 }

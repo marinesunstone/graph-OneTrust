@@ -125,7 +125,7 @@ export const Relationships: Record<
     targetType: Entities.ASSESSMENTRESULTS._type,
   },
   VENDOR_HAS_ASSESSMENTS: {
-    _type: 'onetrust_assessment_has_vendor_assessments',
+    _type: 'onetrust_vendor_assessments_has_assessment',
     sourceType: Entities.ASSESSMENT._type,
     _class: RelationshipClass.HAS,
     targetType: Entities.VENDORS._type,
